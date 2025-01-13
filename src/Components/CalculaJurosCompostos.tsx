@@ -24,7 +24,6 @@ interface Result {
   totalInterest: string;
 }
 
-
 const CalculaJurosCompostos = () => {
   const [initialValue, setInitialValue] = useState("");
   const [monthlyValue, setMonthlyValue] = useState("");
@@ -32,7 +31,7 @@ const CalculaJurosCompostos = () => {
   const [rateType, setRateType] = useState("anual");
   const [period, setPeriod] = useState("");
   const [periodType, setPeriodType] = useState("anos");
-  const [result, setResult] = useState<Result | null>(null);;
+  const [result, setResult] = useState<Result | null>(null);
   const [errorMessage, setErrorMessage] = useState("");
 
   const handleInitialValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
@@ -68,10 +67,12 @@ const CalculaJurosCompostos = () => {
     let n = parseInt(period) || 0;
 
     if (isNaN(PV) || isNaN(PMT) || isNaN(i) || isNaN(n) || i <= 0 || n <= 0) {
-        setErrorMessage("Preencha todos os campos corretamente antes de calcular.");
-        return;
-      }
-      setErrorMessage(""); // Limpa a mensagem de erro ao calcular com sucesso
+      setErrorMessage(
+        "Preencha todos os campos corretamente antes de calcular."
+      );
+      return;
+    }
+    setErrorMessage(""); // Limpa a mensagem de erro ao calcular com sucesso
 
     // Converter taxa anual para mensal (se necessário)
     if (rateType === "anual") {
@@ -101,7 +102,6 @@ const CalculaJurosCompostos = () => {
 
   return (
     <div className="flex flex-col p-4 space-y-6 border rounded-lg shadow-lg">
-        
       <h1 className="text-lg font-bold text-blue-700">
         Simulador de Juros Compostos
       </h1>
@@ -179,7 +179,9 @@ const CalculaJurosCompostos = () => {
           </div>
         </div>
       </div>
-      {errorMessage && <p className="text-blue-500 font-bold ">{errorMessage}</p>}
+      {errorMessage && (
+        <p className="text-blue-500 font-bold ">{errorMessage}</p>
+      )}
       <button
         onClick={calculateCompoundInterest}
         className="px-4 py-2 text-white bg-blue-500 rounded-lg hover:bg-blue-600"
@@ -191,13 +193,12 @@ const CalculaJurosCompostos = () => {
           <div className="p-4 text-center text-white bg-green-600 rounded-lg">
             <h2 className="text-sm font-medium">Valor total final</h2>
             <p className="text-lg font-bold">$ {result.finalValue}</p>
-
           </div>
           <div className="p-4 text-center text-white bg-gray-600 rounded-lg">
             <h2 className="text-sm font-medium">Valor total investido</h2>
             <p className="text-lg font-bold">$ {result.totalInvested}</p>
           </div>
-CalculaJurosCompostos          <div className="p-4 text-center text-white bg-blue-700 rounded-lg">
+          <div className="p-4 text-center text-white bg-blue-700 rounded-lg">
             <h2 className="text-sm font-medium">Total em juros</h2>
             <p className="text-lg font-bold">$ {result.totalInterest}</p>
           </div>
