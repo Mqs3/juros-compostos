@@ -1,6 +1,6 @@
-import React, { useState } from "react";
+import { useState } from "react";
 
-const validateAndFormatNumber = (value) => {
+const validateAndFormatNumber = (value: string): string => {
   // Remove tudo que não for número
   const numbers = value.replace(/\D/g, "");
 
@@ -18,6 +18,13 @@ const validateAndFormatNumber = (value) => {
   }).format(amount);
 };
 
+interface Result {
+  finalValue: string;
+  totalInvested: string;
+  totalInterest: string;
+}
+
+
 const CalculaJurosCompostos = () => {
   const [initialValue, setInitialValue] = useState("");
   const [monthlyValue, setMonthlyValue] = useState("");
@@ -25,29 +32,29 @@ const CalculaJurosCompostos = () => {
   const [rateType, setRateType] = useState("anual");
   const [period, setPeriod] = useState("");
   const [periodType, setPeriodType] = useState("anos");
-  const [result, setResult] = useState(null);
+  const [result, setResult] = useState<Result | null>(null);;
   const [errorMessage, setErrorMessage] = useState("");
 
-  const handleInitialValueChange = (e) => {
+  const handleInitialValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[R$\s.,]/g, ""); // Adicionei o ponto aqui
     setInitialValue(validateAndFormatNumber(rawValue));
   };
 
-  const handleMonthlyValueChange = (e) => {
+  const handleMonthlyValueChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[R$\s.,]/g, ""); // Adicionei o ponto aqui
     setMonthlyValue(validateAndFormatNumber(rawValue));
   };
 
-  const handleRateChange = (e) => {
+  const handleRateChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const rawValue = e.target.value.replace(/[R$\s.,]/g, ""); // Adicionei o ponto aqui
     setRate(validateAndFormatNumber(rawValue));
   };
 
-  const handlePeriodChange = (e) => {
+  const handlePeriodChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     setPeriod(e.target.value.replace(/[^0-9]/g, ""));
   };
 
-  const handleKeyPress = (e) => {
+  const handleKeyPress = (e: React.KeyboardEvent<HTMLInputElement>) => {
     if (e.key === "Enter") calculateCompoundInterest();
   };
 
@@ -190,7 +197,7 @@ const CalculaJurosCompostos = () => {
             <h2 className="text-sm font-medium">Valor total investido</h2>
             <p className="text-lg font-bold">$ {result.totalInvested}</p>
           </div>
-          <div className="p-4 text-center text-white bg-blue-700 rounded-lg">
+CalculaJurosCompostos          <div className="p-4 text-center text-white bg-blue-700 rounded-lg">
             <h2 className="text-sm font-medium">Total em juros</h2>
             <p className="text-lg font-bold">$ {result.totalInterest}</p>
           </div>
